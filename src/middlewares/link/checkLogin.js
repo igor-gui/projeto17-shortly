@@ -6,7 +6,7 @@ export default async function checkLogin(req, res, next) {
     if (!authorization) return res.status(401).send("UNAUTHORIZED");
     const token = authorization.replace("Bearer ", "");
     try {
-        const session = await db.query(`SELECT * sessions WHERE token= $1;`, [token]);
+        const session = await db.query(`SELECT * FROM sessions WHERE token= $1;`, [token]);
         if (!session.rows[0]) return res.status(401).send("UNAUTHORIZED");
         res.locals.body = { url: req.body.url, shortUrl: nanoid(8) }
 

@@ -24,7 +24,7 @@ export async function cryPass(req, res, next) {
 export async function userExists(req, res, next) {
     const { email } = req.body;
     try {
-        const user = await db.query('SELECT * users WHERE email=$1;', [email]);
+        const user = await db.query('SELECT * FROM users WHERE email=$1;', [email]);
         if (!user.rows[0]) return res.status(401).send('USUÁRIO INEXISTENTE');
         res.locals.user = user.rows[0]
     } catch (err) {
