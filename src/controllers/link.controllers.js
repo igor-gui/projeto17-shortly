@@ -4,11 +4,12 @@ export async function createLink(req, res) {
     const { user, body } = res.locals;
     const timestamp = Date.now(); // Obtém o timestamp atual em milissegundos
     const date = new Date(timestamp);
+    
     try {
         await db.query(`
-        INSERT INTO shortenedUrls(url, shortUrl, createdAt, userEmail)
-            VALUES ($1, $2, $3, $4);
-        `, [body.url, body.shortUrl, date, user.email]);
+        INSERT INTO shortenedUrls(url, shortUrl, createdAt, userEmail, visitCount)
+            VALUES ($1, $2, $3, $4, $5);
+        `, [body.url, body.shortUrl, date, user.email, 0]);
 
         const { rows } = await db.query(`
             SELECT shortenedUrls.id, shortenedUrls.shortUrl
