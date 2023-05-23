@@ -4,7 +4,7 @@ export async function createLink(req, res) {
     const { user, body } = res.locals;
     const timestamp = Date.now(); // Obtém o timestamp atual em milissegundos
     const date = new Date(timestamp);
-    
+
     try {
         await db.query(`
         INSERT INTO shortenedUrls(url, shortUrl, createdAt, userEmail, visitCount)
@@ -29,5 +29,17 @@ export async function createLink(req, res) {
 export async function getUrls(req, res) {
     const { url } = res.locals;
     console.log(url)
-    return res.send(url)
+    return res.send({url: url.url, shortUrl: url.shorturl, id: url.id})
+}
+
+export async function deleteUrl(req, res) {
+    const { url } = res.locals;
+    console.log(url)
+    try {
+        await db.query(`DELETE FROM shortenedUrls WHERE shortUrl=$1`, [url.shorturl]);
+        return res.sendStatus(204)
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send(err.message)
+    }
 }
