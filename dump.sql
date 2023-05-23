@@ -53,23 +53,24 @@ ALTER SEQUENCE public.sessions_id_seq OWNED BY public.sessions.id;
 
 
 --
--- Name: shortenedurls; Type: TABLE; Schema: public; Owner: -
+-- Name: shortenedUrls; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.shortenedurls (
+CREATE TABLE public.shortenedUrls (
     id integer NOT NULL,
     url character varying(100) NOT NULL,
     shorturl character varying(8) NOT NULL,
     useremail character varying(100) NOT NULL,
-    createdat timestamp without time zone NOT NULL
+    createdat timestamp without time zone NOT NULL,
+    visitCount integer NOT NULL
 );
 
 
 --
--- Name: shortenedurls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: shortenedUrls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.shortenedurls_id_seq
+CREATE SEQUENCE public.shortenedUrls_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -79,10 +80,10 @@ CREATE SEQUENCE public.shortenedurls_id_seq
 
 
 --
--- Name: shortenedurls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: shortenedUrls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.shortenedurls_id_seq OWNED BY public.shortenedurls.id;
+ALTER SEQUENCE public.shortenedUrls_id_seq OWNED BY public.shortenedUrls.id;
 
 
 --
@@ -95,7 +96,7 @@ CREATE TABLE public.users (
     password character varying(100) NOT NULL,
     name character varying(100) NOT NULL,
     createdat timestamp without time zone NOT NULL,
-    visitcount integer NOT NULL
+    visitCount integer NOT NULL
 );
 
 
@@ -127,10 +128,10 @@ ALTER TABLE ONLY public.sessions ALTER COLUMN id SET DEFAULT nextval('public.ses
 
 
 --
--- Name: shortenedurls id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: shortenedUrls id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.shortenedurls ALTER COLUMN id SET DEFAULT nextval('public.shortenedurls_id_seq'::regclass);
+ALTER TABLE ONLY public.shortenedUrls ALTER COLUMN id SET DEFAULT nextval('public.shortenedUrls_id_seq'::regclass);
 
 
 --
@@ -144,36 +145,39 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.sessions VALUES (1, 'Mari@mail.com', '7b88a7e0-2fe1-4bb4-86f0-6558b4cfb916', '2023-05-23 10:45:32.124');
-INSERT INTO public.sessions VALUES (2, 'Mari@mail.com', 'a9812dac-4706-4d35-8fd2-62fafe6f0128', '2023-05-23 10:45:48.305');
+INSERT INTO public.sessions VALUES (1, 'Mari@mail.com', 'd5b4f374-98af-426c-be5b-2588ca70ee17', '2023-05-23 14:46:24.068');
 
 
 --
--- Data for Name: shortenedurls; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: shortenedUrls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.shortenedurls VALUES (1, 'https://www.youtube.com', 'lGdYmNqY', 'Mari@mail.com', '2023-05-23 10:45:53.703');
+INSERT INTO public.shortenedUrls VALUES (1, 'https://www.youtube.com', 'fwXUBq-A', 'Mari@mail.com', '2023-05-23 14:47:49.03', 0);
+INSERT INTO public.shortenedUrls VALUES (2, 'https://www.youtube.com', 'P7v3TKUT', 'Mari@mail.com', '2023-05-23 15:03:58.981', 0);
+INSERT INTO public.shortenedUrls VALUES (3, 'https://www.youtube.com', '-jZCI3yF', 'Mari@mail.com', '2023-05-23 15:03:59.904', 0);
+INSERT INTO public.shortenedUrls VALUES (4, 'https://www.youtube.com', 'sg2NURNw', 'Mari@mail.com', '2023-05-23 15:04:00.3', 0);
+INSERT INTO public.shortenedUrls VALUES (5, 'https://www.youtube.com', 'N22eM8hg', 'Mari@mail.com', '2023-05-23 15:49:23.048', 0);
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (1, 'Mari@mail.com', '$2b$10$9zrQdDP6esThJPsfqsjvg.hhOUTVw/82tYJ8jdbqFMI9hLMdbRV/u', 'Mariano', '2023-05-23 10:45:10.641', 0);
+INSERT INTO public.users VALUES (1, 'Mari@mail.com', '$2b$10$L8JGo8IKP4oVra.jiqPMjOkwhYYEW1JicMg9eHeisbKIwQ10B3/sW', 'Mariano', '2023-05-23 14:46:21.496', 0);
 
 
 --
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 2, true);
+SELECT pg_catalog.setval('public.sessions_id_seq', 1, true);
 
 
 --
--- Name: shortenedurls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: shortenedUrls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.shortenedurls_id_seq', 1, true);
+SELECT pg_catalog.setval('public.shortenedUrls_id_seq', 5, true);
 
 
 --
@@ -192,11 +196,11 @@ ALTER TABLE ONLY public.sessions
 
 
 --
--- Name: shortenedurls shortenedurls_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: shortenedUrls shortenedUrls_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.shortenedurls
-    ADD CONSTRAINT shortenedurls_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.shortenedUrls
+    ADD CONSTRAINT shortenedUrls_pkey PRIMARY KEY (id);
 
 
 --
@@ -208,10 +212,10 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: shortenedurls unique_shorturl; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: shortenedUrls unique_shorturl; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.shortenedurls
+ALTER TABLE ONLY public.shortenedUrls
     ADD CONSTRAINT unique_shorturl UNIQUE (shorturl);
 
 
