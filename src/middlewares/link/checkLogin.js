@@ -8,9 +8,10 @@ export default async function checkLogin(req, res, next) {
     try {
         const session = await db.query(`SELECT * FROM sessions WHERE token=$1;`, [token]);
         if (!session.rows[0]) return res.status(401).send("Sessão não encontrada");
+        const email = session.rows[0].email;
         
-        const user = await db.query("SELECT * FROM users WHERE email=$1", [session.rows[0].email])
-        res.locals.body = { url: req.body.url, shortUrl: nanoid(8) }
+        const user = await db.query("SELECT * FROM users WHERE email=$1;", [email]);
+        res.locals.body = { url: req.body.url, shortUrl: nanoid(8) };
         res.locals.user = user.rows[0];
 
     } catch (err) {
