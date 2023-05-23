@@ -32,7 +32,7 @@ export async function createSession(req, res) {
         `,
             [email, token, date]
         )
-        return res.send(token)
+        return res.send({ token })
     } catch (err) {
         console.error(err);
         return res.status(500).send(err.message)
