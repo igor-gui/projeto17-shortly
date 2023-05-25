@@ -14,8 +14,7 @@ export async function createLink(req, res) {
         const { rows } = await db.query(`
             SELECT shortenedUrls.id, shortenedUrls.shortUrl
                 FROM shortenedUrls
-                WHERE shortUrl = $1;
-`, [body.shortUrl]);
+                WHERE shortUrl = $1;`, [body.shortUrl]);
         const [row] = rows;
         return res.send(row)
 
@@ -29,7 +28,7 @@ export async function createLink(req, res) {
 export async function getUrls(req, res) {
     const { url } = res.locals;
     console.log(url)
-    return res.send({url: url.url, shortUrl: url.shorturl, id: url.id})
+    return res.send({ url: url.url, shortUrl: url.shorturl, id: url.id })
 }
 
 export async function deleteUrl(req, res) {
@@ -42,4 +41,10 @@ export async function deleteUrl(req, res) {
         console.error(err);
         return res.status(500).send(err.message)
     }
+}
+
+export async function goToUrl(req, res) {
+    const { url } = res.locals;
+    console.log(url)
+    return res.redirect(url);
 }
