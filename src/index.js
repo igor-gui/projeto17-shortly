@@ -14,7 +14,6 @@ app.use(routelist)
 app.post('/', async (req, res) => {
     try {
         await db.query(`
-        create database shortly;
         CREATE TABLE users (
             ID SERIAL PRIMARY KEY,
             email VARCHAR(100) NOT NULL,
